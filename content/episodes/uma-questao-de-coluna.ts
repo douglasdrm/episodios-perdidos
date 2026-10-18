@@ -19,6 +19,14 @@ export const umaQuestaoDeColuna: Episode = {
         mobile: '52% 48%',
       },
     },
+    card: {
+      desktop: '/images/episodes/uma-questao-de-coluna/hero-desktop.webp',
+      alt: 'Sala de uma casa de praia em Malibu iluminada pelo pôr do sol.',
+      focalPoint: {
+        desktop: '60% 52%',
+        mobile: '56% 52%',
+      },
+    },
     social: '/images/episodes/uma-questao-de-coluna/social.webp',
   },
   chapters,
