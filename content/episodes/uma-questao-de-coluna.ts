@@ -19,6 +19,7 @@ export const umaQuestaoDeColuna: Episode = {
         mobile: '52% 48%',
       },
     },
+    social: '/images/episodes/uma-questao-de-coluna/social.webp',
   },
   chapters,
 };
