@@ -19,6 +19,10 @@ export type SeriesArtwork = {
   poster?: ResponsiveArtwork;
   hero?: ResponsiveArtwork;
   social?: string;
+  overlay?: {
+    desktop: string;
+    mobile?: string;
+  };
 };
 
 export type EpisodeArtwork = {
