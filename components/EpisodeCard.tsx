@@ -12,7 +12,7 @@ export function EpisodeCard({ episode }: { episode: Episode }) {
   return (
     <article className="episode-card">
       <Link className="episode-card__cover" href={`/ler/${episode.slug}`} aria-label={`Ler ${episode.title}`}>
-        <Artwork artwork={episode.artwork?.card ?? episode.artwork?.hero} fallback={<MalibuCover compact />} />
+        <Artwork artwork={episode.artwork?.card} fallback={<MalibuCover compact />} />
         <span className="cover-label">Edição especial</span>
         <span className="cover-title">{episode.title}</span>
       </Link>
