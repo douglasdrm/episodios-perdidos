@@ -9,6 +9,7 @@ export const umaQuestaoDeColuna: Episode = {
   synopsis: 'Charlie passou a vida inteira zombando da profissão do irmão. Agora, suas costas têm outros planos — e Alan finalmente ganha a chance de provar seu valor.',
   status: 'published',
   readingTime: '35 min de leitura',
+  endNote: 'Algumas vitórias duram apenas nove segundos.',
   artwork: {
     hero: {
       desktop: '/images/episodes/uma-questao-de-coluna/hero-desktop.webp',

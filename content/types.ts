@@ -35,7 +35,14 @@ export type Chapter = {
   title: string;
   paragraphs: string[];
   eyebrow?: string;
+  tocLabel?: string;
+  blocks?: ChapterBlock[];
   image?: ResponsiveArtwork;
+};
+
+export type ChapterBlock = {
+  kind: 'paragraph' | 'subheading' | 'divider' | 'emphasis' | 'strong';
+  text?: string;
 };
 
 export type Series = {
@@ -56,6 +63,11 @@ export type Episode = {
   publishedAt?: string;
   status: 'published' | 'draft';
   readingTime: string;
+  label?: string;
+  chapterCount?: number;
+  hasExtra?: boolean;
+  endNote?: string;
+  showEndMark?: boolean;
   chapters: Chapter[];
   artwork?: EpisodeArtwork;
   theme?: Partial<VisualTheme>;

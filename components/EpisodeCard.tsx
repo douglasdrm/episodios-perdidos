@@ -7,13 +7,13 @@ import { getSeries } from '@/lib/catalog';
 
 export function EpisodeCard({ episode }: { episode: Episode }) {
   const parent = getSeries(episode.seriesSlug);
-  const numberedChapters = episode.chapters.filter((chapter) => !chapter.eyebrow).length;
-  const hasExtra = episode.chapters.some((chapter) => chapter.eyebrow);
+  const numberedChapters = episode.chapterCount??episode.chapters.filter((chapter) => !chapter.eyebrow).length;
+  const hasExtra = episode.hasExtra??episode.chapters.some((chapter) => chapter.eyebrow);
   return (
     <article className="episode-card">
       <Link className="episode-card__cover" href={`/ler/${episode.slug}`} aria-label={`Ler ${episode.title}`}>
         <Artwork artwork={episode.artwork?.card} fallback={<MalibuCover compact />} />
-        <span className="cover-label">Edição especial</span>
+        <span className="cover-label">{episode.label??'Edição especial'}</span>
         <span className="cover-title">{episode.title}</span>
       </Link>
       <div className="episode-card__body">
