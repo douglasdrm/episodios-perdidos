@@ -1,6 +1,7 @@
 export type ResponsiveArtwork = {
   desktop: string;
   mobile?: string;
+  mobileBreakpoint?: number;
   alt: string;
   focalPoint?: {
     desktop?: string;
@@ -29,6 +30,10 @@ export type EpisodeArtwork = {
   hero?: ResponsiveArtwork;
   card?: ResponsiveArtwork;
   social?: string;
+  overlay?: {
+    desktop: string;
+    mobile?: string;
+  };
 };
 
 export type Chapter = {
@@ -41,8 +46,9 @@ export type Chapter = {
 };
 
 export type ChapterBlock = {
-  kind: 'paragraph' | 'subheading' | 'divider' | 'emphasis' | 'strong';
+  kind: 'paragraph' | 'subheading' | 'divider' | 'emphasis' | 'strong' | 'image';
   text?: string;
+  artwork?: ResponsiveArtwork;
 };
 
 export type Series = {
@@ -68,6 +74,7 @@ export type Episode = {
   hasExtra?: boolean;
   endNote?: string;
   showEndMark?: boolean;
+  heroPresentation?: 'default' | 'editorial';
   chapters: Chapter[];
   artwork?: EpisodeArtwork;
   theme?: Partial<VisualTheme>;

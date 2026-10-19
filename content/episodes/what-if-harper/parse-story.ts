@@ -3,6 +3,15 @@ import {join} from 'node:path';
 import type {Chapter,ChapterBlock} from '../../types';
 
 const source=readFileSync(join(process.cwd(),'content/episodes/what-if-harper/story.md'),'utf8');
+const imageRoot='/images/episodes/what-if-harper';
+const illustrations:Record<string,ChapterBlock>={
+  'Era Evelyn Harper.':{kind:'image',artwork:{desktop:`${imageRoot}/prologo-evelyn-vigia.webp`,alt:'Evelyn Harper como observadora do multiverso, cercada por realidades alternativas luminosas.'}},
+  'Alan: quiroprático rico. Charlie: músico pobre.':{kind:'image',artwork:{desktop:`${imageRoot}/universo-1-alan-rico.webp`,alt:'Alan Harper rico em uma casa de Malibu enquanto Charlie tenta seguir a carreira musical.'}},
+  'Alan, dois anos mais novo, estava no sofá estudando biologia.':{kind:'image',artwork:{desktop:`${imageRoot}/flashback-1986.webp`,alt:'Charlie adolescente tocando teclado enquanto Alan estuda biologia em 1986.'}},
+  'Charlie: quiroprático rico. Alan: músico pobre.':{kind:'image',artwork:{desktop:`${imageRoot}/universo-2-charlie-rico.webp`,alt:'Charlie Harper como quiroprático bem-sucedido enquanto Alan tenta compor músicas.'}},
+  'Alan: músico rico. Charlie: quiroprático pobre.':{kind:'image',artwork:{desktop:`${imageRoot}/universo-3-alan-musico-rico.webp`,alt:'Alan Harper como compositor rico enquanto Charlie trabalha em uma clínica modesta.'}},
+  'Nesta realidade, os meninos foram criados pelo pai após o divórcio.':{kind:'image',artwork:{desktop:`${imageRoot}/pos-creditos-quarta-realidade.webp`,alt:'Charlie e Alan felizes e bem-sucedidos ao lado do pai em uma quarta realidade alternativa.'}},
+};
 
 function parseStory(markdown:string):Chapter[]{
   const chapters:Chapter[]=[];
@@ -14,9 +23,13 @@ function parseStory(markdown:string):Chapter[]{
   let bodyStarted=false;
 
   const targetBlocks=()=>current?.blocks??pendingBlocks;
+  const pushBlock=(block:ChapterBlock)=>{
+    targetBlocks().push(block);
+    if(block.text&&illustrations[block.text])targetBlocks().push(illustrations[block.text]);
+  };
   const flushParagraph=()=>{
     if(!paragraph.length)return;
-    targetBlocks().push({kind:'paragraph',text:paragraph.join(' ')});
+    pushBlock({kind:'paragraph',text:paragraph.join(' ')});
     paragraph=[];
   };
   const startChapter=(title:string,eyebrow:string,tocLabel:string)=>{
@@ -47,10 +60,10 @@ function parseStory(markdown:string):Chapter[]{
       if(heading.startsWith('EPÍLOGO — ')){startChapter(heading.slice(10),'Epílogo','E');continue}
       if(heading.startsWith('CENA PÓS-CRÉDITOS — ')){startChapter(heading.slice(20),'Cena pós-créditos','★');continue}
     }
-    if(line.startsWith('### ')){flushParagraph();targetBlocks().push({kind:'subheading',text:line.slice(4)});continue}
-    if(line==='---'||line==='***'){flushParagraph();targetBlocks().push({kind:'divider'});continue}
-    if(/^\*\*.*\*\*$/.test(line)){flushParagraph();targetBlocks().push({kind:'strong',text:line.slice(2,-2)});continue}
-    if(/^\*[^*].*\*$/.test(line)){flushParagraph();targetBlocks().push({kind:'emphasis',text:line.slice(1,-1)});continue}
+    if(line.startsWith('### ')){flushParagraph();pushBlock({kind:'subheading',text:line.slice(4)});continue}
+    if(line==='---'||line==='***'){flushParagraph();pushBlock({kind:'divider'});continue}
+    if(/^\*\*.*\*\*$/.test(line)){flushParagraph();pushBlock({kind:'strong',text:line.slice(2,-2)});continue}
+    if(/^\*[^*].*\*$/.test(line)){flushParagraph();pushBlock({kind:'emphasis',text:line.slice(1,-1)});continue}
     paragraph.push(line);
   }
   flushParagraph();
