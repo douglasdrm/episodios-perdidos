@@ -5,12 +5,12 @@ import type {Chapter,ChapterBlock} from '../../types';
 const source=readFileSync(join(process.cwd(),'content/episodes/what-if-harper/story.md'),'utf8');
 const imageRoot='/images/episodes/what-if-harper';
 const illustrations:Record<string,ChapterBlock>={
-  'Era Evelyn Harper.':{kind:'image',artwork:{desktop:`${imageRoot}/prologo-evelyn-vigia.webp`,alt:'Evelyn Harper como observadora do multiverso, cercada por realidades alternativas luminosas.'}},
+  '— Eu sou Evelyn Harper. Observo todos os universos. E, infelizmente, sou mãe deles em todos.':{kind:'image',artwork:{desktop:`${imageRoot}/prologo-evelyn-vigia.webp`,alt:'Evelyn Harper como observadora do multiverso, cercada por realidades alternativas luminosas.'}},
   'Alan: quiroprático rico. Charlie: músico pobre.':{kind:'image',artwork:{desktop:`${imageRoot}/universo-1-alan-rico.webp`,alt:'Alan Harper rico em uma casa de Malibu enquanto Charlie tenta seguir a carreira musical.'}},
-  'Alan, dois anos mais novo, estava no sofá estudando biologia.':{kind:'image',artwork:{desktop:`${imageRoot}/flashback-1986.webp`,alt:'Charlie adolescente tocando teclado enquanto Alan estuda biologia em 1986.'}},
+  'Alan, também adolescente, estudava anatomia à mesa.':{kind:'image',artwork:{desktop:`${imageRoot}/flashback-1986.webp`,alt:'Charlie adolescente tocando teclado enquanto Alan estuda biologia em 1986.'}},
   'Charlie: quiroprático rico. Alan: músico pobre.':{kind:'image',artwork:{desktop:`${imageRoot}/universo-2-charlie-rico.webp`,alt:'Charlie Harper como quiroprático bem-sucedido enquanto Alan tenta compor músicas.'}},
-  'Alan: músico rico. Charlie: quiroprático pobre.':{kind:'image',artwork:{desktop:`${imageRoot}/universo-3-alan-musico-rico.webp`,alt:'Alan Harper como compositor rico enquanto Charlie trabalha em uma clínica modesta.'}},
-  'Nesta realidade, os meninos foram criados pelo pai após o divórcio.':{kind:'image',artwork:{desktop:`${imageRoot}/pos-creditos-quarta-realidade.webp`,alt:'Charlie e Alan felizes e bem-sucedidos ao lado do pai em uma quarta realidade alternativa.'}},
+  'Alan: compositor rico. Charlie: quiroprático pobre.':{kind:'image',artwork:{desktop:`${imageRoot}/universo-3-alan-musico-rico.webp`,alt:'Alan Harper como compositor rico enquanto Charlie trabalha em uma clínica modesta.'}},
+  'Na quarta realidade, o pai de Charlie e Alan estava vivo e os havia criado depois de se separar de Evelyn quando os filhos ainda eram pequenos.':{kind:'image',artwork:{desktop:`${imageRoot}/pos-creditos-quarta-realidade.webp`,alt:'Charlie e Alan felizes e bem-sucedidos ao lado do pai em uma quarta realidade alternativa.'}},
 };
 
 function parseStory(markdown:string):Chapter[]{
@@ -48,6 +48,7 @@ function parseStory(markdown:string):Chapter[]{
     if(!line){flushParagraph();continue}
     const part=line.match(/^# PARTE (.+)$/);
     if(part){flushParagraph();current=undefined;pendingPart=`Parte ${part[1]}`;pendingBlocks=[];continue}
+    if(line.startsWith('# EPÍLOGO — ')){startChapter(line.slice(12),'Epílogo','E');continue}
     const numberedHeading=line.match(/^# CAPÍTULO (\d+)$/);
     if(numberedHeading){flushParagraph();current=undefined;pendingChapter=numberedHeading[1];continue}
     const inlineChapter=line.match(/^## CAPÍTULO (\d+) — (.+)$/);

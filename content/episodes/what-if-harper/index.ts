@@ -10,7 +10,7 @@ export const whatIfHarper:Episode={
   status:'published',
   readingTime:'Leitura longa',
   label:'Especial What If...?',
-  chapterCount:21,
+  chapterCount:19,
   hasExtra:true,
   showEndMark:false,
   heroPresentation:'editorial',
